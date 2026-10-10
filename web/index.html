@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>ROOM 01</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <header>
+      <div class="eyebrow">PRIVATE LOUNGE · YAKUTSK</div>
+      <h1>ROOM <span>01</span></h1>
+      <p class="muted">Твоя комната. Твои правила.</p>
+    </header>
+    <section class="hero">
+      <div class="hero-label">ПРИВАТНОЕ ПРОСТРАНСТВО</div>
+      <h2>Время для своей компании</h2>
+      <p>Фильмы, игры и отдых без посторонних.</p>
+    </section>
+    <section class="panel">
+      <div class="section-title">Забронировать</div>
+      <label for="day">Дата</label>
+      <input id="day" type="date">
+      <label for="duration">Длительность</label>
+      <div class="durations" id="durations">
+        <button data-hours="1" class="selected">1 час</button>
+        <button data-hours="2">2 часа</button>
+        <button data-hours="3">3 часа</button>
+        <button data-hours="4">4 часа</button>
+      </div>
+      <label>Начало сеанса</label>
+      <div id="slots" class="slots"><p class="muted">Выбери дату</p></div>
+      <div class="total-row"><span>Стоимость</span><strong id="total">—</strong></div>
+      <button id="book" class="primary" disabled>Выбери время</button>
+      <p id="notice" class="notice">Оплата и автоматический доступ подключаются после настройки серверных интеграций.</p>
+    </section>
+    <section class="panel">
+      <div class="section-title">Мои бронирования</div>
+      <button id="loadBookings" class="secondary">Показать мои брони</button>
+      <div id="myBookings"></div>
+    </section>
+    <footer>ROOM 01 · YAKUTSK <span>01</span></footer>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
