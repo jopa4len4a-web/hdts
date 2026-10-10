@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#101113">
+  <title>ROOM 01 — приватная комната</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <header class="top-header">
+    <div><div class="eyebrow">PRIVATE LOUNGE · YAKUTSK</div><h1>ROOM <span>01</span></h1></div>
+    <div class="open-pill"><span class="live-dot"></span> Частное пространство</div>
+  </header>
+
+  <nav class="tabs" aria-label="Разделы приложения">
+    <button class="tab active" data-tab="about">О комнате</button>
+    <button class="tab hidden-tab" data-tab="booking" id="bookingTab">Бронь</button>
+    <button class="tab" data-tab="rules">Правила</button>
+    <button class="tab" data-tab="my">Мои брони</button>
+    <button class="tab" data-tab="info">Информация</button>
+  </nav>
+
+  <main>
+    <section class="view active" id="view-about">
+      <div class="hero">
+        <div class="hero-label">ТВОЯ КОМПАНИЯ. ТВОЁ ВРЕМЯ.</div>
+        <h2>Пространство, где можно быть своей компанией</h2>
+        <p>ROOM 01 — приватная комната для отдыха без посторонних. Собирайтесь с друзьями, смотрите фильмы, играйте и проводите время в своём ритме.</p>
+        <div class="hero-chips"><span>Приватно</span><span>По времени</span><span>Для своей компании</span></div>
+      </div>
+      <div class="feature-grid">
+        <article class="feature"><div class="feature-icon">01</div><h3>Личное пространство</h3><p>Комната бронируется под вашу компанию на выбранное время.</p></article>
+        <article class="feature"><div class="feature-icon">02</div><h3>Выбираете вы</h3><p>Планируйте отдых под себя: общение, фильмы или игры — в пределах доступного оснащения.</p></article>
+        <article class="feature"><div class="feature-icon">03</div><h3>Понятная бронь</h3><p>Выберите дату, длительность и свободное время, а затем отправьте заявку.</p></article>
+      </div>
+      <div class="info-card"><div class="section-title">Как это работает</div>
+        <ol class="steps"><li><span>1</span><div><b>Прочитай правила</b><small>Условия посещения собраны в отдельной вкладке.</small></div></li>
+        <li><span>2</span><div><b>Выбери время</b><small>Календарь покажет доступные интервалы.</small></div></li>
+        <li><span>3</span><div><b>Отправь заявку</b><small>Сейчас онлайн-оплата и автоматический доступ ещё настраиваются.</small></div></li></ol>
+      </div>
+      <button class="primary wide" data-go="booking">Перейти к бронированию <span>→</span></button>
+      <p class="fineprint">Перед отправкой заявки ознакомься с правилами посещения.</p>
+    </section>
+
+    <section class="view" id="view-booking">
+      <div class="page-heading"><div class="eyebrow">ПЛАНИРОВАНИЕ ВИЗИТА</div><h2>Забронировать комнату</h2><p>Выбери дату, длительность и свободное время.</p></div>
+      <div class="panel">
+        <label for="day">Дата посещения</label><input id="day" type="date">
+        <label>Длительность</label>
+        <div class="durations" id="durations"><button data-hours="1" class="selected">1 час</button><button data-hours="2">2 часа</button><button data-hours="3">3 часа</button><button data-hours="4">4 часа</button></div>
+        <div class="slot-heading"><label>Начало сеанса</label><span id="slotHint">Свободные интервалы</span></div>
+        <div id="slots" class="slots"><p class="muted">Выбери дату</p></div>
+        <div class="total-row"><span>Стоимость по текущему тарифу</span><strong id="total">—</strong></div>
+        <button id="book" class="primary wide" disabled>Выбери время</button>
+        <p id="notice" class="notice">Заявка не является подтверждённой бронью. Онлайн-оплата пока не подключена — дождись подтверждения администратора.</p>
+      </div>
+      <div class="info-card compact"><b>Перед бронированием</b><p>Убедись, что дата и длительность выбраны верно. Создание нескольких заявок на одно время не гарантирует отдельные места.</p><button class="text-button" data-go="rules">Прочитать правила посещения →</button></div>
+    </section>
+
+    <section class="view" id="view-rules">
+      <div class="page-heading"><div class="eyebrow">ВАЖНО ПЕРЕД ВИЗИТОМ</div><h2>Правила ROOM 01</h2><p>Черновые правила для интерфейса. Перед запуском для реальных клиентов проверь и утверди окончательные условия.</p></div>
+      <div class="rule-list">
+        <article class="rule"><span>01</span><div><h3>Бережное отношение</h3><p>Пользуйтесь мебелью и оборудованием аккуратно. О повреждениях или неисправностях сразу сообщайте администратору.</p></div></article>
+        <article class="rule"><span>02</span><div><h3>Время бронирования</h3><p>Приходите к началу забронированного времени и освободите комнату к его окончанию, чтобы не задерживать следующих гостей.</p></div></article>
+        <article class="rule"><span>03</span><div><h3>Порядок и безопасность</h3><p>Запрещены опасные действия, порча имущества и поведение, мешающее соседям или другим посетителям здания.</p></div></article>
+        <article class="rule"><span>04</span><div><h3>Чистота</h3><p>Оставляйте помещение в аккуратном состоянии. Убирайте за собой мусор и не оставляйте личные вещи.</p></div></article>
+        <article class="rule"><span>05</span><div><h3>Отмена и изменения</h3><p>Пока автоматическая оплата и отмена не подключены, согласовывайте изменения времени или отмену напрямую с администратором. Не считайте заявку подтверждённой до ответа.</p></div></article>
+        <article class="rule"><span>06</span><div><h3>Контент и оборудование</h3><p>Используйте только доступные функции и контент законным способом. Не изменяйте настройки оборудования без разрешения.</p></div></article>
+      </div>
+      <button class="primary wide" data-go="booking">Я ознакомился, перейти к бронированию</button>
+    </section>
+
+    <section class="view" id="view-my">
+      <div class="page-heading"><div class="eyebrow">ТВОИ ВИЗИТЫ</div><h2>Мои бронирования</h2><p>Здесь отображаются заявки, созданные через твой Telegram-аккаунт.</p></div>
+      <div class="panel"><button id="loadBookings" class="secondary wide">Обновить список</button><div id="myBookings" class="my-bookings"><p class="muted">Нажми «Обновить список».</p></div></div>
+    </section>
+
+    <section class="view" id="view-info">
+      <div class="page-heading"><div class="eyebrow">О ROOM 01</div><h2>Информация</h2><p>Коротко о формате и текущем статусе сервиса.</p></div>
+      <div class="info-card"><h3>Что такое ROOM 01?</h3><p>Это концепция приватной комнаты по предварительной записи для небольших компаний. Доступные функции и оборудование уточняются перед подтверждением визита.</p></div>
+      <div class="info-card"><h3>Где мы находимся?</h3><p>Якутск. Точный адрес, схема входа и инструкция по доступу должны быть опубликованы здесь владельцем до открытия бронирований.</p></div>
+      <div class="info-card"><h3>Оплата и доступ</h3><p>На текущем этапе интеграция Platega и автоматическая выдача кода от двери не активированы. Не отправляй платёжные данные в чат и не считай заявку оплаченной.</p></div>
+      <div class="info-card"><h3>Связь</h3><p>По вопросам заявки используй чат с официальным аккаунтом ROOM 01 после того, как владелец укажет контакт. Не оставляй личные или платёжные данные в открытых сообщениях.</p></div>
+      <button class="primary wide" data-go="about">Вернуться на главную</button>
+    </section>
+  </main>
+  <footer><span>ROOM 01 · YAKUTSK</span><span>PRIVATE LOUNGE</span></footer>
+</div>
+<script src="app.js"></script>
+</body></html>
