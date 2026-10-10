@@ -1,48 +1,29 @@
-# ROOM 01 Telegram Mini App — starter
+# ROOM 01 — версия для BotHost
 
-Starter project includes:
-- Telegram bot that opens the Mini App
-- responsive dark Mini App UI
-- FastAPI backend
-- SQLite bookings and overlap checks
-- basic admin API endpoint protected by a token
+## Что настроено
+- Один процесс запускает Telegram-бота и веб-сервер Mini App.
+- Mini App открывается по `https://roomykt.bothost.tech`.
+- Внутренний порт берётся из `PORT` (BotHost должен передавать `3000`).
+- Страница и API обслуживаются с одного HTTPS-домена.
+- Telegram `initData` проверяется сервером перед созданием и просмотром бронирований.
+- Время расписания — `Asia/Yakutsk`.
 
-## Run locally
+## Файлы
+- `main.py` — точка входа для BotHost.
+- `server.py` — API, база SQLite и раздача Mini App.
+- `bot.py` — исходный отдельный запуск бота, для обычного BotHost выбери `main.py`.
+- `web/` — HTML, CSS, JavaScript Mini App.
+- `requirements.txt` — зависимости.
 
-Use Python 3.11+.
+## Настройки BotHost
+1. Загрузить содержимое архива в корень проекта (не сам ZIP как вложенную папку).
+2. Язык: Python. Главный файл / entrypoint: `main.py`.
+3. Внутренний порт: `3000`. Приложение слушает `0.0.0.0` и читает порт из `PORT`.
+4. В переменных окружения задать `BOT_TOKEN` — токен от @BotFather.
+5. Задать `WEBAPP_URL=https://roomykt.bothost.tech`.
+6. Рекомендуется задать `ROOM_PRICE_PER_HOUR=1200`, `OPEN_HOUR=10`, `CLOSE_HOUR=23`, `ADMIN_TOKEN` — длинный случайный секрет.
+7. Если в панели есть постоянное хранилище, используй его для `/app/data`, иначе SQLite может потеряться при пересборке/перезапуске.
+8. Выполни полный деплой и проверь `https://roomykt.bothost.tech/api/health` — ожидается JSON `{"ok":true,"service":"ROOM 01"}`. Затем открой домен в браузере и нажми `/start` у бота.
 
-```bash
-python -m venv .venv
-# Windows: .venv\Scripts\activate
-# macOS/Linux: source .venv/bin/activate
-pip install -r requirements.txt
-cp .env.example .env
-```
-
-Set `BOT_TOKEN`, `WEBAPP_URL`, and other settings in `.env`.
-
-Start API:
-```bash
-uvicorn server:app --host 0.0.0.0 --port 8000
-```
-
-Host `web/` on a public HTTPS static host, then set `WEBAPP_URL` to that HTTPS page.
-In `web/app.js`, set `const API = "https://YOUR-API-DOMAIN";` before deploying.
-Start the Telegram bot in a second terminal:
-```bash
-python bot.py
-```
-
-## Important security / production work still required
-
-This is a development scaffold, NOT ready to take real payments or grant access:
-1. Validate Telegram `initData` signature on the server. Current API accepts a browser-supplied Telegram ID for demonstration; this is insecure for production.
-2. Add user authentication middleware and derive user ID only from validated `initData`.
-3. Configure CORS for only the actual Mini App domain.
-4. Integrate Platega using its current official merchant documentation. Do not trust client-side payment status; verify payment server-side / webhook.
-5. Integrate a specific compatible lock model only after confirming its API and safe exit/manual override.
-6. Add cancellation/refund policy, privacy notice, rate limiting, logs, backups, monitoring, timezone rules, and tests.
-7. Protect and expand admin operations; never expose `ADMIN_TOKEN` in frontend code.
-8. Test edge cases and concurrency before taking bookings.
-
-The API creates a booking with `pending` status. It intentionally does not pretend that payment or smart-lock integration exists.
+## Важно
+Mini App и создание заявок работают, но **онлайн-оплата Platega и автоматическая выдача кода замка не подключены**. Пока заявки будут иметь статус `pending`. Не используй этот вариант как полностью автоматизированную платную систему, пока не интегрированы и не протестированы платёжный webhook, подтверждение оплаты и API конкретного замка. Проверь условия использования и настройки хостинга с владельцем аккаунта/взрослым.
