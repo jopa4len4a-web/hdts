@@ -1,29 +1,34 @@
-# ROOM 01 — версия для BotHost
+# ROOM 01 — BotHost revision with admin panel
 
-## Что настроено
-- Один процесс запускает Telegram-бота и веб-сервер Mini App.
-- Mini App открывается по `https://roomykt.bothost.tech`.
-- Внутренний порт берётся из `PORT` (BotHost должен передавать `3000`).
-- Страница и API обслуживаются с одного HTTPS-домена.
-- Telegram `initData` проверяется сервером перед созданием и просмотром бронирований.
-- Время расписания — `Asia/Yakutsk`.
+## Files
+- `main.py` — starts Telegram bot and FastAPI on the same process
+- `server.py` — booking API, SQLite database, Telegram Mini App signature validation, admin API
+- `web/` — customer Mini App and `/admin` page
+- `Dockerfile` — Python container entry point
 
-## Файлы
-- `main.py` — точка входа для BotHost.
-- `server.py` — API, база SQLite и раздача Mini App.
-- `bot.py` — исходный отдельный запуск бота, для обычного BotHost выбери `main.py`.
-- `web/` — HTML, CSS, JavaScript Mini App.
-- `requirements.txt` — зависимости.
+## BotHost setup
+1. Select Docker deployment if available; do not run `main.py` with Node.js.
+2. Set `BOT_TOKEN` to the token from @BotFather.
+3. Set `WEBAPP_URL=https://roomykt.bothost.tech`.
+4. Set `PORT=3000`.
+5. Ensure the container has persistent storage and set `DATA_DIR=/app/data` if supported.
+6. Deploy. Check `https://roomykt.bothost.tech/api/health`.
+7. Open the Mini App from Telegram, then open `https://roomykt.bothost.tech/admin` inside Telegram to access the admin panel.
 
-## Настройки BotHost
-1. Загрузить содержимое архива в корень проекта (не сам ZIP как вложенную папку).
-2. Язык: Python. Главный файл / entrypoint: `main.py`.
-3. Внутренний порт: `3000`. Приложение слушает `0.0.0.0` и читает порт из `PORT`.
-4. В переменных окружения задать `BOT_TOKEN` — токен от @BotFather.
-5. Задать `WEBAPP_URL=https://roomykt.bothost.tech`.
-6. Рекомендуется задать `ROOM_PRICE_PER_HOUR=1200`, `OPEN_HOUR=10`, `CLOSE_HOUR=23`, `ADMIN_TOKEN` — длинный случайный секрет.
-7. Если в панели есть постоянное хранилище, используй его для `/app/data`, иначе SQLite может потеряться при пересборке/перезапуске.
-8. Выполни полный деплой и проверь `https://roomykt.bothost.tech/api/health` — ожидается JSON `{"ok":true,"service":"ROOM 01"}`. Затем открой домен в браузере и нажми `/start` у бота.
+## Admin access
+The backend verifies Telegram Web App `initData` and permits admin APIs only when the verified username is `@OwnerParadoxy`. Username changes can affect access; for stronger long-term control, add the Telegram numeric user ID to the allowlist as well.
 
-## Важно
-Mini App и создание заявок работают, но **онлайн-оплата Platega и автоматическая выдача кода замка не подключены**. Пока заявки будут иметь статус `pending`. Не используй этот вариант как полностью автоматизированную платную систему, пока не интегрированы и не протестированы платёжный webhook, подтверждение оплаты и API конкретного замка. Проверь условия использования и настройки хостинга с владельцем аккаунта/взрослым.
+## Important
+- The admin panel lets you change room name, hourly price, opening/closing hours, booking statuses, and save Platega merchant/API fields.
+- **Saving Platega credentials does not activate payments.** Real payment creation, signed webhook/callback verification, duplicate-event protection, and status transition after verified payment still need to be implemented against current official Platega documentation.
+- Smart-lock code generation is not integrated. Do not promise automatic door access until the exact lock model and API are tested.
+- Use HTTPS and persistent storage. Do not expose `BOT_TOKEN` or Platega secrets in frontend files or screenshots.
+- Do not use the booking/payment workflow with real customers until payment integration, cancellation rules, backups, and timezone behavior have been tested.
+
+
+## Updated multi-tab customer interface
+- Customer `/start` message opens the Mini App introduction.
+- Only the Telegram username `@OwnerParadoxy` receives a separate admin-panel message.
+- Mini App tabs: About, Booking, Rules, My bookings, Information.
+- Booking CTA is presented after the introductory section; the booking tab is still available through navigation.
+- Rules and location/contact details are draft content and should be reviewed before accepting real customers.
